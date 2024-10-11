@@ -48,7 +48,7 @@ The final file path should be the same as the following:
 
 ## Training and Evaluation
 
-If you are using an NVIDIA graphics card and accelerating inference with CUDA, please replace line 12 in `LSTM.py` and line 8 in `inference.py` with the following code.
+If you are using an NVIDIA graphics card and accelerating inference with CUDA, please replace line 12 in `LSTM.py`, line 8 in `inference.py` and line 10 in `eval.py` with the following code.
 
 ```python
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
