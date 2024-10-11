@@ -46,9 +46,7 @@ The final file path should be the same as the following:
 ├─ LSTM.py
 ├─ inference.py
 ├─ preprocess.py
-├─ processed_emails.csv
-├─ lstm_spam_classifier.pth
-└─ vocab.pkl
+└─ ...
 ```
 
 ## Training and Evaluation
