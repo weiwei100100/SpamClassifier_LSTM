@@ -1,0 +1,6 @@
+numpy==1.26.4
+pandas==2.2.2
+beautifulsoup4
+jieba
+torchtext==0.17.0
+scikit-learn==1.5.2
