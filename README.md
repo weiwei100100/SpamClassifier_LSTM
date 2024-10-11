@@ -12,13 +12,17 @@ We test the code on PyTorch 2.2.0 + TorchText 0.17.0 with MPS(MacBook Pro M1max)
 In a Linux environment, we test our code on PyTorch 2.2.0 + TorchText 0.17.0 with CUDA 11.8(NVIDIA RTX4090).
 
 1. Create a new conda environment
-```
+```sh
 conda create -n py39 python=3.9
 conda activate py39
 ```
 2. Install dependencies
-```
+```sh
+# for Linux
 pip install torch==2.2.0+cu118 --index-url https://download.pytorch.org/whl/cu118
+# for MacOS
+pip install torch==2.2.0
+
 pip install -r requirements.txt
 ```
 
