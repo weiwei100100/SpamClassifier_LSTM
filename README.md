@@ -82,6 +82,18 @@ Run the script below to perform model inference:
 python inference.py
 ```
 
+## Results
+
+The performance of our LSTM-based spam detection model was evaluated using the **TREC 2006 (trec06c) dataset**, with the following results:
+
+| **Metric**   | **Score** |
+|--------------|-----------|
+| Accuracy     | 0.9904    |
+| Precision    | 0.9889    |
+| Recall       | 0.9957    |
+| F1 Score     | 0.9923    |
+
+These results demonstrate the model's high effectiveness in identifying spam emails, with a strong balance between precision and recall, indicating its reliability in both detecting spam and minimizing false positives.
 
 ## Train your own data
 
