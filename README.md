@@ -82,6 +82,12 @@ Run the script below to perform model inference:
 python inference.py
 ```
 
+Run the script below to launch the graphical operating system:
+
+```sh
+python GUI.py
+```
+
 ## Results
 
 The performance of our LSTM-based spam detection model was evaluated using the **TREC 2006 (trec06c) dataset**, with the following results:
