@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 ### Download
 
-You can download the pretrained models and datasets on [BaiduPan]([https://pan.baidu.com/s/1i4HaYTB](https://pan.baidu.com/s/1SG4jZSySIRYgjrqhQ2y6CQ?pwd=yvp1)).
+You can download the pretrained models and datasets on [BaiduPan](https://pan.baidu.com/s/1SG4jZSySIRYgjrqhQ2y6CQ?pwd=yvp1).
 
 Extract the compressed package, select the required files, and place them into folders named 'ham' and 'spam' respectively.
 
