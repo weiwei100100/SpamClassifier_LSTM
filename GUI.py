@@ -5,8 +5,14 @@ import torch.nn as nn
 import jieba
 import pickle
 import pandas as pd
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 from torch.utils.data import DataLoader, Dataset
+from matplotlib import rcParams
+
+rcParams['font.sans-serif'] = ['Heiti TC']
+rcParams['axes.unicode_minus'] = False
 
 # 设备配置
 device = torch.device('mps' if torch.backends.mps.is_available() else 'cpu')
@@ -106,6 +112,7 @@ class SpamDataset(Dataset):
 
 # 定义模型评估函数
 def evaluate_model():
+    global all_labels, all_predictions  # 将变量声明为全局变量，以便在其他函数中使用
     # 加载数据
     data = pd.read_csv('processed_emails.csv')
     # 划分训练集和测试集
@@ -140,6 +147,35 @@ def evaluate_model():
               f"召回率（Recall）：{recall:.4f}\n"
               f"F1 值（F1 Score）：{f1:.4f}")
     return result
+
+# 新增：定义显示混淆矩阵的函数
+def show_confusion_matrix():
+    if 'all_labels' not in globals() or 'all_predictions' not in globals():
+        messagebox.showwarning("警告", "请先点击评估模型按钮，以生成混淆矩阵数据。")
+        return
+    cm = confusion_matrix(all_labels, all_predictions)
+    classes = ['正常邮件', '垃圾邮件']
+
+    plt.figure(figsize=(5, 4))
+    plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
+    plt.title('混淆矩阵')
+    plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation=0)
+    plt.yticks(tick_marks, classes)
+
+    plt.xlabel('预测标签')
+    plt.ylabel('真实标签')
+
+    # 在图中添加数字标签
+    thresh = cm.max() / 2.
+    for i, j in np.ndindex(cm.shape):
+        plt.text(j, i, format(cm[i, j], 'd'),
+                 horizontalalignment="center",
+                 verticalalignment="center",
+                 color="white" if cm[i, j] > thresh else "black")
+    plt.tight_layout()
+    plt.show()
 
 # 构建 GUI
 def main():
@@ -234,17 +270,24 @@ def main():
     eval_text = scrolledtext.ScrolledText(eval_frame, height=3, font=default_font)
     eval_text.pack(fill=tk.BOTH, expand=True)
 
+    # 评估和显示混淆矩阵按钮区域
+    eval_button_frame = tk.Frame(eval_frame)
+    eval_button_frame.pack(pady=5)
+
     # 评估按钮
     def on_evaluate():
         eval_result = evaluate_model()
         eval_text.delete("1.0", tk.END)
         eval_text.insert(tk.END, eval_result)
 
-    evaluate_button = tk.Button(eval_frame, text="评估模型", command=on_evaluate, width=10, font=default_font)
-    evaluate_button.pack(pady=5)
+    evaluate_button = tk.Button(eval_button_frame, text="评估模型", command=on_evaluate, width=12, font=default_font)
+    evaluate_button.grid(row=0, column=0, padx=5)
+
+    # 新增：显示混淆矩阵按钮
+    show_cm_button = tk.Button(eval_button_frame, text="显示混淆矩阵", command=show_confusion_matrix, width=12, font=default_font)
+    show_cm_button.grid(row=0, column=1, padx=5)
 
     window.mainloop()
-
 
 if __name__ == "__main__":
     main()
